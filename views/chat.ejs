@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <title>Chat Bot</title>
+</head>
+<style>
+.material-icons{
+    color: white;
+    font-size: 32px;
+}
+#usernamai{
+    color:white
+}
+</style>
+<body>
+<nav class="navbar navbar-expand-lg bg-info">
+<a class="navbar-brand" href="/homepage"><i class="material-icons">home</i></a>
+<a class="navbar-brand"><i class="material-icons">account_circle</i></a>
+<a class="navbar-brand" id="usernamai"><%=user%></a>
+<div class="dropdown">
+<button class="btn btn-info dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">More</button>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+<a class="dropdown-item" href="/homepage">Homepage</a>
+<a class="dropdown-item" href="/report"><i class="material-icons" style="color: black;">pan_tool</i>Report</a>
+<a class="dropdown-item" href="#">Careers</a>
+<a class="dropdown-item" href="/reviews">Review</a>
+<a class="dropdown-item" href="/details">Details</a>
+<a class="dropdown-item" href="/logout">Log Out</a>
+</div>
+</div>
+</nav>
+<div class="container">
+<span class="badge badge-info" id="status"></span>
+</div>
+<img src="./images/undraw_chat_bot_kli5.png" width="15%">
+<div class="container">
+<div class="row">
+<div class="col-md-6 offset-md col-md-12">
+<h1 class="text-center">Chat</h1>
+<div class="card">
+<div class="card-body">
+<div id="userMessages">
+</div>
+<div id="robotMessages">
+</div>
+</div>
+</div>
+<br>
+<form action="/askBot" method="POST">
+<textarea name="textarea" id="textarea" class="form-control"></textarea>
+<br>
+<center>
+<button type="submit" id="button" class="btn btn-success"><i class="material-icons">send</i></button>
+</center>
+<a href="/homepage" class="btn btn-primary"><i class="material-icons">logout</i></a>
+</form>
+<span class="badge badge-info" id="leaveChat"></span>
+</div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

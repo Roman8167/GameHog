@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Write a Review</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".replyComments").hide()
+    $("#initialcomment").hide()
+    $(".editComment").hide()
+    $('.commentBox').hide()
+    $(".commentEdit").hide()
+    $(".comment").hide()
+   $(".updateRoute").hide() 
+   $('.form').hide()
+    $("#addPostButton").click(function(){
+        $(".form").toggle(300)
+    })
+    $("#buttonEdit").click(function(){
+        $(".updateRoute").toggle(300)
+    });
+    $("#commentButton").click(function(){
+        $(".comment").toggle(300);
+       
+        
+    });
+    $("#cancelEdit").click(function(){
+        $('.commentEditBox').toggle(300)
+    });
+    $("#cancelButton").click(function(){
+        $(".editComment").hide(100)
+    })
+})
+</script>
+</head>
+<style>
+.material-icons{
+    font-size: 30px;
+    display: inline;
+    zoom: 1;
+    
+}
+.fa{
+    color: gold;
+    max-width: 300px;
+    margin: 2px;
+}
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<a class="navbar-brand" href="/homepage"><i class="material-icons">home</i></a>
+<a class="navbar-brand"><i class="material-icons">account_box</i></a><span style="font-size: 15px;" class="badge badge-info"><%=user%></span>
+<br>
+<a role="button" class="btn" id="addPostButton"><i class="material-icons">add</i></a>
+</nav>
+<div class="container">
+<img src="./images/undraw_like_dislike_1dfj.png" width="25%" class="img-fluid" style="position: relative;right: 10em;">
+<%-include('./errors.ejs')%>
+</div>
+<div class="container">
+<%for(var i=0;i< customerReview.length;i++){%>
+<div class="card" style="border-radius: 10px 10px 10px 10px;width: 40em;">
+<div class="card-body">
+<h5 class="text-center">Review</h5>
+<img src="./images/undraw_profile_pic_ic5t.png" width="20%" class="img-fluid" style="position: relative;right: 2em;">
+<p class="text-info" style="font-weight: bold;">Name</p>
+<p class="text"><%=customerReview[i].name%></p>
+<p class="text-info" style="font-weight: bold;">Type</p>
+<p class="responsive-text"><%=customerReview[i].type%></p>
+<p class="text-info" style="font-weight:bold">Rating</p>
+<div class="stars-2">
+<i class="fa fa-star-o"></i>
+<i class="fa fa-star-o"></i>
+<i class="fa fa-star-o"></i>
+<i class="fa fa-star-o"></i>
+<i class="fa fa-star-o"></i>
+</div>
+<span class="badge badge-success" style="position: relative;left: 4em;"><%=customerReview[i].rate%></span>
+<p class="text-info" style="font-weight: bold;">Customer Review</p>
+<p class="responsive-text"><%=customerReview[i].customerReview%></p>
+</div>
+<i class="material-icons" style="position: relative;top: 6em;">remove_red_eye</i><p style="position: relative;top: 8em;left: 2em;"><%=views%></p>
+<!---likebutton-->
+<a href="/likebutton" style="position: relative;top: 3.5em;"><i class="material-icons">thumb_up</i></a><a href="/dislikeButton" style="position: relative;left: 5em;top: 1.9em;"><i class="material-icons">thumb_down</i></a><p style="position: relative;left: 7em;top: 0.4em;"><%=customerReview[i].dislike%></p><p style="position: relative;left: 3em;top: -2.3em;"><%=customerReview[i].likes%></p><a id="buttonEdit" style="position: relative;bottom: 4.5em;left: 33em;"><i class="material-icons">edit</i></a></button><a href="/deleteReview/<%=customerReview[i]._id%>" role="button" style="position: relative;left: 35em;bottom: 6.3em;"><i class="material-icons">delete</i></a>
+<i class="material-icons" style="position: relative;left: 7em;bottom: 5.5em;" id="commentButton">comment</i>
+<div class="container">
+<!--Edit Comment goes here-->
+</div>
+<div class="container">
+<div class="comment" style="position: relative;bottom: 5em;">
+<label for="Comment">Comment</label>
+<form action="/comment" method="POST">
+<input type="text" id="comment" name="comment" class="form-control" placeholder="Write A Comment">
+<br>
+<button type="submit" class="btn btn-info">Post</button>
+</form>
+<br>
+</div>
+</div>
+<%for(var j=0;j< customerReview[i].comment.length;j++){%>
+<div class="container">
+<div class="commentOutput" id="commentOutput">
+<img src="./images/undraw_profile_pic_ic5t.png" width="7%" style="position: relative;bottom: 2em;">
+<p style="position: relative;left: 3em;bottom: 5.5em;"><%=customerReview[i].comment[j].name%></p>
+<div id="realcomment"><p style="position: relative;bottom: 6em;left: 3em;" class="responsive-text" onclick="editComment(this)"><%=customerReview[i].comment[j].comment%></p></div>
+<a style="position: relative;left: 27em;bottom: 10em;color: cornflowerblue;" href="/likeComment/<%=customerReview[i].comment[j]._id%>"><i class="material-icons">thumb_up</i></a>
+<p id="likedComments" style="position: relative;left: 28em;bottom:10em"><%=customerReview[i].comment[j].likes%></p>
+<p id="dislikedComments" style="position: relative;left: 26em;bottom: 12.3em;"><%=customerReview[i].comment[j].dislikes%></p>
+<a style="position: relative;left: 30em;bottom: 14em;color: grey;" href="/dislikeComment/<%=customerReview[i].comment[j]._id%>"><i class="material-icons">thumb_down</i></a>
+<a href="/deleteComment/<%=customerReview[i].comment[j]._id%>" style="position: relative;left: 32em;bottom: 14em;"><i class="material-icons">delete</i></a>
+<button style="position: relative;left: 32em;bottom: 14.5em;color: blue;" onclick="replyButton(this)" class="btn" data-id="<%=customerReview[i].comment[j]._id%>"><i class="material-icons">reply</i></button>
+</div>
+</div>
+<%}%>
+<%}%>
+<div class="container">
+<div class="replies" style="position: relative;top: -9em;left: 10em;">
+<%for(var i=0;i< customerReview.length;i++){%>
+<%for(var j=0;j< customerReview[i].comment.length;j++){%>
+<%for(var k=0;k < customerReview[i].comment[j].reply.length;k++){%>
+<img src="./images/undraw_profile_pic_ic5t.png" width="7%" style="position: relative;right: 3em;top: 2em;">
+<p><%=customerReview[i].comment[j].reply[k].name%></p>
+<p onclick="editReply(this)"><%=customerReview[i].comment[j].reply[k].reply%></p>
+<a href="/deleteReply/<%=customerReview[i].comment[j].reply[k]._id%>" role="button" class="btn" style="color: red;position: relative;left: 25em;bottom: 3em;"><i class="material-icons">delete</i></a>
+<br> 
+<br>
+<br>
+<br>
+<br>
+<%}%>
+<%}%> 
+<%}%>
+</div>
+</div>
+<div class="container">
+<div class="editReply" style="position: relative;bottom:36.5em;">
+<form action="/editReply" method="POST">
+<input type="text" id="initialReplies" name="initialReplies" class="form-control" hidden>
+<input type="text" id="reply" name="reply" class="form-control">
+<button type="submit" class="btn"><i class="material-icons">send</i></button>
+</form>
+</div>
+</div>
+<div class="replyComments" style="position: relative;bottom: 37em;" id="replyComments">
+<form action="/reply" method="POST">
+<input type="text" id="replyID" name="replyID" class="form-control" hidden>
+<input type="text" id="reply" name="reply" class='form-control form-control-sm' style="width: 25em;">
+<button type="submit" class="btn"><i class="material-icons">send</i></button>
+<i class="material-icons" style="position: relative;top: 0.15em;">cancel</i>
+</form>
+</div>
+<script>
+var initialReplies = document.getElementById("initialReplies");
+var editReplyButtons = document.getElementById("editReplyButtons");
+$(".editReply").hide();
+function editReply(g){
+    $(g).click(function(){
+        $('.editReply').show(300)
+    })
+    initialReplies.value = g.innerHTML;
+    console.log(initialReplies.value)
+}
+var replyID = document.getElementById("replyID");
+function replyButton(e){
+
+    $(e).click(function(){
+        $(".replyComments").show(400)
+    })
+    replyID.value = e.dataset.id
+    console.log(replyID.value)
+}
+var initialcomment = document.getElementById("initialcomment");
+function editComment(e){
+
+initialcomment.value = e.innerHTML;
+$(e).click(function(){
+$(".editComment").show(100)
+})
+}
+</script>
+<div class="editComment" style="position: relative;bottom: 5em;">
+<form action="/editComment" method="POST">
+<input type="text" id="initialcomment" name="initialcomment" class="form-control">
+<input type="text" id="comment" name="comment" class="form-control">
+<button type="submit" class="btn"><i class="material-icons">send</i></button>
+<i class="material-icons" id="cancelButton" style="position: relative;top: 0.23em;">cancel</i>
+</div>
+</div>
+</div>
+</form>
+<div class="container">
+<div class="updateRoute">
+<form action="/updateReview" method="POST">
+<label for="type">Type</label>
+<select name="type" id="type" class="form-control">
+<option value="Product">Product</option>
+<option value="Services">Services</option>
+</select>
+<label for="rate">Rating</label>
+<input type="number" id="rate" name="rate" class="form-control" min="0" max="5" step="0.01" placeholder="Rate from 0 to 5">
+<br>
+<textarea name="customerReview" id="customerReview" cols="30" rows="10" class="form-control"></textarea>
+<div class="text-center">
+<button class="btn btn-primary">Update</button>
+</div>
+</form>
+</div>
+</div>
+<script>
+var ratingNumbers = 0;
+var stars2 = document.querySelector(".stars-2").children
+'<%for(var i=0;i<customerReview.length;i++){%>'
+ratingNumber = '<%=customerReview[i].rate%>';
+
+if(ratingNumber==0){
+        stars2[0].classList = 'fa fa-star-o'
+        stars2[1].classList = 'fa fa-star-o',
+        stars2[2].classList = 'fa fa-star-o'
+        stars2[3].classList = 'fa fa-star-o'
+        stars2[4].classList = 'fa fa-star-o' 
+    }
+    if(ratingNumber>=0.5 && ratingNumber<=1){
+        stars2[0].classList = 'fa fa-star-half-o',
+        stars2[1].classList = 'fa fa-star-o',
+        stars2[2].classList = 'fa fa-star-o'
+        stars2[3].classList = 'fa fa-star-o'
+        stars2[4].classList = 'fa fa-star-o'
+    }
+    if(ratingNumber>=1 && ratingNumber<=1.5){
+        stars2[0].classList = 'fa fa-star',
+        stars2[1].classList = 'fa fa-star-o',
+        stars2[2].classList = 'fa fa-star-o'
+        stars2[3].classList = 'fa fa-star-o'
+        stars2[4].classList = 'fa fa-star-o'
+    }
+    if(ratingNumber>=1.5 && ratingNumber<=2){
+        stars2[0].classList = 'fa fa-star',
+        stars2[1].classList = 'fa fa-star-half-o',
+        stars2[2].classList = 'fa fa-star-o'
+        stars2[3].classList = 'fa fa-star-o'
+        stars2[4].classList = 'fa fa-star-o'
+    }
+    if(ratingNumber>=2 && ratingNumber<=2.5){
+        stars2[0].classList = 'fa fa-star'
+        stars2[1].classList = "fa fa-star",
+        stars2[2].classList = 'fa fa-star-o'
+        stars2[3].classList = 'fa fa-star-o'
+        stars2[4].classList = 'fa fa-star-o'
+        
+    }
+    if(ratingNumber>=2.5 && ratingNumber<=3){
+        stars2[0].classList = 'fa fa-star',
+        stars2[1].classList = 'fa fa-star',
+        stars2[2].classList = 'fa fa-star-half-o',
+        stars2[3].classList = 'fa fa-star-o'
+        stars2[4].classList = 'fa fa-star-o'
+    }
+    if(ratingNumber>=3 && ratingNumber<=3.5){
+        stars2[0].classList = 'fa fa-star',
+        stars2[1].classList = 'fa fa-star'
+        stars2[2].classList = 'fa fa-star',
+        stars2[3].classList = 'fa fa-star-o'
+        stars2[4].classList = 'fa fa-star-o'
+    }
+    if(ratingNumber>=3.5 && ratingNumber<=4){
+        stars2[0].classList = 'fa fa-star',
+        stars2[1].classList = 'fa fa-star',
+        stars2[2].classList = 'fa fa-star'
+        stars2[3].classList = 'fa fa-star-half-o'
+    }
+    if(ratingNumber>=4 && ratingNumber<=4.5){
+        stars2[0].classList = 'fa fa-star',
+        stars2[1].classList = 'fa fa-star',
+        stars2[2].classList = 'fa fa-star'
+        stars2[3].classList = 'fa fa-star',
+        stars2[4].classList = 'fa fa-star-o'
+    }
+    if(ratingNumber>=4.5 && ratingNumber<=5){
+        stars2[0].classList = 'fa fa-star',
+        stars2[1].classList = 'fa fa-star',
+        stars2[2].classList = 'fa fa-star'
+        stars2[3].classList = 'fa fa-star'
+        stars2[4].classList = 'fa fa-star-half-o'
+        
+    }
+    if(ratingNumber==5){
+        for(var i=0;i<stars2.length;i++){
+            stars2[i].classList = 'fa fa-star'
+        }
+    }
+'<%}%>'
+</script>
+</div>
+</div>
+<div class="form">
+<form action="/reviews" method="POST">
+<div class="text-center">
+<label for="type">Type</label>
+<select name="type" id="type" class="form-control">
+<option value="Product">Product</option>
+<option value="service">Services</option>
+<br>
+<input type="number" id="rate" name="rate" class="form-control" min="0" max="5" step="0.01" placeholder="Rate from 0-5" style="position: relative;top: 1em;">
+<br>
+<div class="container">
+</div>
+<textarea name="customerReview" id="customerReview" cols="30" rows="10" class="form-control"></textarea>
+<br>
+<button type="submit" class="btn btn-info">Submit</button>
+</form>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>  
+</body>
+<script>
+var ratingNumber = document.getElementById("rating");
+var stars2 = document.querySelector(".stars-2").children;
+</script>
+</html>

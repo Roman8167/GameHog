@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Home</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<a class="navbar-brand" href="#">GameHog</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span></button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul class="navbar-nav mr-auto">
+<li class="nav-item active">
+<a class="nav-link" href="/homepage">Home <span class="sr-only">(current)</span></a>
+</li>
+<li class="nav-item">
+<a class="nav-link"><i class="material-icons">shopping_cart</i></a>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn More</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+<a class="dropdown-item" href="/report"><i class="material-icons">pan_tool</i>Report</a>
+<a class="dropdown-item" href="#">Careers</a>
+<a href="/contact" class="dropdown-item">Contact</a>
+<a class="dropdown-item" href="/reviews">Review</a>
+<a class="dropdown-item" href="/details">Details</a>
+<a class="dropdown-item" href="/logout">Log Out</a>
+</div>
+</li>
+<li class="nav-item">
+<a class="nav-link"><%=user%></a>
+</li>
+</ul>
+<form action="/homepage" method="POST">
+<label for="searchgame">Search Games Here</label>
+<input type="text" id="searchgame" name="searchgame" class="form-control-sm">
+<button type="submit" class="btn-danger btn block">Search</button>
+<br>
+</form>
+</div>
+<div class="nav-item dropdown">
+<a href= "#" class='nav-link dropdown-toggle' id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter by Genre</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+<form action="/genre" method="POST">
+<input type="text" id="category" name="category" class="form-control-sm-2"><button class="btn-danger btn block" type="submit">Submit</button>
+</form>
+<a href="/adventure" class="dropdown-item">Action-Adventure Game</a>
+<a href="/tactical" class="dropdown-item">Tactial Shooter</a>
+<a href="/sports" class="dropdown-item">Sports Game</a>
+<a class="dropdown-item">More...</a>
+</div>
+</div>
+<div>
+<label for="range">Price Range</label>
+<form action="/range" method="POST">
+$<input type="number" size="4" min="1" id="minRange" name="minRange"><p class="responsive-text">and</p>$<input type="number" size="4" min="1" id="maxRange" name="maxRange">
+<br>
+<br>
+<button type="submit" class="btn-danger btn bloc-sm">Proceed</button>
+</form>
+</div>
+</div>
+<div class="dropdown">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter by Platform!</button>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+<form action="/platforms" method="POST">
+<input type="text" id="platforms" name="platforms" class="form-control-sm-2">
+<button type="submit" class="btn-primary btn block">Search</button>
+</form>
+<a class="dropdown-item" href="/windows">Microsoft Windows</a>
+<a class="dropdown-item" href="#">Search for More!</a>
+</div>
+</div>
+</nav>
+<div class="container">
+<span class="badge badge-info" id="statistics"></span>
+<%-include('./errors.ejs')%>
+<%games.forEach(function(game){%>
+<div class="card" style="width: 800px; height: 950px;">
+<div class="card-body">
+<img src="<%=game.imagePath%>" width="20%" class="img-fluid">
+<p class="card-text"><%=game.gameName%></p>
+<span class="badge" style="text-decoration: underline;">Description</span><p class="card-text"><%=game.description%></p>
+<span class="badge" style="text-decoration: underline;">Price</span><p class="card-text">$<%=game.price%></p>
+<span class="badge" style="text-decoration: underline;">Mode</span><p class="card-text"><%=game.mode%></p>
+<span class="badge" style="text-decoration: underline;">Genre</span><p class="card-text"><%=game.category%></p>
+<span class="badge" style="text-decoration: underline;">Platforms</span><p class="card-text"><%=game.operatingsystems%></p>
+<span class="badge" style="text-decoration: underline;">Company</span><p class="card-text"><%=game.company%></p>
+<span class="badge" style="text-decoration: underline;">Release Date</span><p class="card-text"><%=game.date%></p>
+<a href="/add-to-cart/<%=game._id%>" role="button" class="btn-info btn block"><i class="material-icons">add_shopping_cart</i></a>
+</div>
+</div>
+<%})%>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>    
+</body>
+</html>

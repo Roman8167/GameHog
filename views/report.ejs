@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Report</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+<a class="navbar-brand" href="/homepage" style="color: black;"><i class="material-icons">home</i></a>
+<i class="material-icons">account_circle</i>
+<span class="badge badge-info"><%=user%></span>
+<a class="btn" href="/logout"><i class="material-icons">logout</i></a>
+<div class="dropdown">
+<button class = 'btn btn dropdown-toggle' id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+<div class="dropdown-menu" aria-labelledby="dropdownMenu">
+<a class="dropdown-item" href="/reviews">Reviews</a>
+<a class="dropdown-item" href="/details">Details</a>
+<a class="dropdown-item" href="#">Careers</a>
+<a class="dropdown-item" href="#">Contact</a>
+</div>
+</div>
+<%if(adminMessage.length>0){%>
+<%for(var i=0;i < adminMessage.length;i++){%>
+<div class="dropdown">
+<button class="btn btn-info dropdown-toggle" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown"><i class="material-icons">notifications</i></button>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+<p class="text-info"><%=adminMessage[i].reply%></p>
+</div>
+</div>
+<%}%>
+<%}else{%>
+<div class="dropdown">
+<button class="btn btn-info dropdown-toggle" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown"><i class="material-icons">notifications</i></button>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+<center>
+<p class="text-primary" style="color: red;">No new Notifications!</p>
+</center>
+</div>
+</div>
+<%}%>
+</nav>
+<center>
+<%-include('./errors.ejs')%>
+</center>
+<div class="container">
+<img src="./images/undraw_things_to_say_ewwb.png" width="25%" style="position: relative;right: 10em;">
+<div class="text-center">
+<h5 style="position: relative;bottom: 2em;">Report</h5>
+</div>
+</div>
+<div class="container">
+<div class="card" style="width: 40em;position: relative;left: 10em;border-radius: 20px 20px 20px 20px;">
+<div class="card-body">
+<div class="text-center">
+<form action="/report" method="POST">
+<label><strong>What was your problem?</strong></label>
+<select class="form-control" id="issue" name="issue">
+<option value="Delivery Issues">Delivery Issues</option>
+<option value="Refund Policy">Refund Policy</option>
+<option value="User Interface Problems">User Interface Problems</option>
+<option value="Shopping Cart Issues">Shopping Cart Issues</option>
+<option value="Fraud">Fraud</option>
+<option value="User opinion">User's Opinion</option>
+</select>
+<br>
+<label><strong>Please Describe your problems to us..</strong></label>
+<div class="mainReport">
+<label for="report">Enter Text Here</label>
+<textarea name="report" id="report" class="form-control"></textarea>
+<br>
+<button type="submit" class="btn btn-info">Submit</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>     
+</body>
+</html>

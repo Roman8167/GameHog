@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Manage</title>
+</head>
+<style>
+.tables{
+    position: relative;
+    bottom: 34em;
+}
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<a class="navbar-brand"><i class="material-icons" style="font-size: 30px;">account_circle</i></a>
+<br>
+<br>
+<a href="/admin" role="button" class="btn"><i class="material-icons" style="font-size: 30px;">replay</i></a>
+<a href="/finance" role="button" class="btn"><i class=" medium material-icons" style="font-size: 32px;">insert_chart</i></a>
+</nav>
+<div class="text-center">
+<%-include('./errors.ejs')%>
+</div>
+<div class="card" style="width: 9em;height: 8m;">
+<div class="card-body">
+<div class="text-center">
+<i class="material-icons" style="font-size: 30px;">local_offer</i>
+<br>
+<br>
+<span>Discount</span>
+<br>
+<br>
+<button class="btn-primary btn-round" id='buttontag'><i class="material-icons">add_circle_outline</i></button>
+<form action="/discount" method="POST">
+<label for="price">Price</label>
+<label for=">"><span class="badge badge-success">></span></label>
+<input type="number"  min="0" class="form-control" id="price" name="price">
+<label>Discount</label>
+<input type="number" id="discount" name="discount" class="form-control" min="0" step="0.01">
+<button type="submit" class="btn"><i class="material-icons">send</i></button>
+</form>
+</div>
+</div>
+</div>
+<div class="card" style="width: 9em; height: 15em;position: relative;bottom: 21.7em;left: 20em;">
+<div class="card-body">
+<p class="card-text">
+<div class="text-center">
+<i class="material-icons" style="font-size: 30px;">account_balance_wallet</i>
+<span>Expenditure</span>
+</p>
+<form action="/expenditure" method="POST">
+<label>Check Customer Expenditure</label>
+<button id="expenseButton" class="btn"><i class="material-icons" style="font-size: 40px;">check</i></button>
+</form>
+<div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card" style="width: 8em; height: 8m;position: relative;left: 40em;bottom: 36.7em;">
+<div class="card-body">
+<div class="text-center">
+<i class="material-icons" style="font-size: 35px;">monetization_on</i>
+<div class="text-center">
+<form action="/increasePrice" method="POST">
+<p>Add Price</p>
+<label>Price</label>
+<span class="badge badge-primary"><</span>
+<input type="number" id="addPrice" name="addPrice" class="form-control" min="1">
+<label>Percentage Increase</label>
+<input type="number" id="percentageIncrease" name="percentageIncrease" class="form-control"><br><span class="badge badge-info" style="font-size: 20px;">%</span>
+<br>
+<button type="submit" class="btn"><i class="material-icons">add</i></button>
+</form>
+</div>
+</div>
+</div>
+</div>
+<div class="tables">
+<div class="dropdown">
+<button class="btn info dropdown-toggle" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown"><i class="material-icons">tune</i></button>
+</button>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+<a class="dropdown-item" href="/alphabet">Sort by Alphabetically</a>
+<a class="dropdown-item" href="/sortAscend">Sort Expense by Ascending order</a>
+<a class="dropdown-item" href="/sortDescend">Sort Expense by Descending order</a>
+</div>
+</div>
+<div>
+<table class="table table-sm">
+<thead class="thead-dark">
+<tr>
+<th scope="col">Customer Name</th>
+<th scope="col">Expenditure</th>
+<th scope="col">Total Quantity</th>
+</tr>
+</thead>
+<tbody>
+<%for(var i=0; i < expense.length;i++){%>
+<tr>
+<td><%=expense[i]._id%></td>
+<td>$<%=expense[i].expense%></td>
+<td><%=expense[i].totalqty%></td>
+<td></td>
+</tr>
+</tbody>
+<%}%>
+</table>
+</div>
+<label>Total-Expense:</label><span class="badge badge-success">$<%=totalExpense%></span>
+<br>
+<label>Total-Qty</label><span class="badge badge-info"><%=totalQty%></span>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Finance Reports/Charts</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<a  class="navbar-brand"><a href="#" class="btn">Financial Charts</a>
+<a href="/admin" class="navbar-brand" class="btn"><i class="material-icons">home</i></a>
+</nav>
+<div class="container">
+<img src="./images/undraw_visual_data_b1wx.png" width="27%" style="position: relative;left: 50em;">
+<div class="graph">
+<div class="card" style="width: 20em;border-radius: 10px 10px 10px 10px;position: relative;bottom: 9.7em;">
+<div class="card-body">
+<h5 class="text-center">Purchase Rate Chart</h5>
+<canvas id="myChart" style="width: 400;"></canvas>
+<h5 class="text-center">Total Orders</h5>
+<%for(var i=0;i < totalOrders.length;i++){%>
+<div class="text-center">
+<span class="badge badge-info"><%=totalOrders[i].totalOrders%> Units</span>
+</div>
+<%}%>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="graph2">
+<div class="card" style="width: 20em;border-radius: 10px 10px 10px 10px;position: relative;bottom: 7em;">
+<h5 class="text-center">Revenue Chart</h5>
+<div class="card-body">
+<canvas id="revenueChart"></canvas>
+<h5 class="text-center">Total Revenue</h5>
+<%for(var i=0;i< totalRevenue.length;i++){%>
+<div class="text-center">
+<span class="badge badge-success">$<%=totalRevenue[i].totalRevenue%></span>
+</div>
+<%}%>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="graph3">
+<div class="card" style="width: 20em;border-radius: 10px 10px 10px 10px;position: relative;bottom: 4em;">
+<div class="card-body">
+<h5 class="text-center">Most Purchased Game</h5>
+<canvas id="gameCharts"></canvas>
+<h5 class="text-center">Total</h5>
+<%for(var i=0;i< mostSoldQuantity.length;i++){%>
+<div class="text-center">
+<span class="badge badge-success">$<%=mostSoldQuantity[i].total%></span>
+</div>
+<%}%>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="graph4">
+<div class="card" style="width: 20em;border-radius: 10px 10px 10px 10px;">
+<div class="card-body">
+<h5 class="text-center">User Chart</h5>
+<canvas id="userChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script>
+var price = [];
+var id = []
+Chart.defaults.global.fontFamily = 'Lato',
+Chart.defaults.global.fontSize = 18
+var myChart = document.getElementById("myChart").getContext('2d');
+'<%for(var i=0;i<purchaseRates.length;i++){%>'
+price.push(parseFloat('<%=purchaseRates[i].totalSold%>'));
+var customer = 1;
+for(var i=0;i<id.length;i++){
+    customer+=1
+}
+id.push("Customer" + customer);
+console.log(id)
+console.log(price)
+var newChart = new Chart(myChart,{
+    type:'line',
+    data:{
+        labels:[] = id,
+        datasets:[{
+            label:"Purchase Rate Chart",
+            data:[] = price,
+            backgroundColor:["rgba(141, 89, 200, 0.5)"],
+            borderWidth:1,
+            borderColor:"#000"
+        }]
+    },
+    options:{
+        title:{
+            display:true,
+            text:"Customer Purchase Rate",
+           
+            
+        }
+    }
+})
+'<%}%>'
+var revenue = [];
+var date = [];
+var month = [];
+month[0] = "January";
+month[1] = "February";
+month[2] = "March";
+month[3] = "April";
+month[4] = "May";
+month[5] = "June";
+month[6] = "July";
+month[7] = "August";
+month[8] = "September";
+month[9] = "October";
+month[10] = "November";
+month[11] = "December";
+'<%revenueResults.forEach(function(revenue){%>'
+revenue.push('<%=revenue.revenue%>');
+date.push(month[new Date().getMonth()]);
+console.log(revenue);
+console.log(date);
+var revenueChart = document.getElementById("revenueChart").getContext("2d");
+var revenueChart = new Chart(revenueChart,{
+    type:'line',
+    data:{
+        labels:[] = date,
+        datasets:[{
+            label:"Revenue Chart",
+            data:[] = revenue,
+            backgroundColor:['rgba(229, 53, 116, 0.9)'],
+            borderWidth:2,
+            borderColor:"#000"
+        }]
+    }
+})
+'<%})%>'
+'<%for(var i=0;i<mostSoldGames.length;i++){%>'
+var mostSoldGame = [];
+mostSoldGame.push('<%=mostSoldGames[i].mostSoldGames%>');
+console.log(mostSoldGame)
+'<%}%>'
+'<%for(var i=0;i<mostSoldQuantity.length;i++){%>'
+var mostSoldTotalQuantity = [];
+mostSoldTotalQuantity.push(parseFloat('<%=mostSoldQuantity[i].total%>'))
+'<%}%>'
+var gameCharts = document.getElementById("gameCharts").getContext("2d");
+new Chart(gameCharts,{
+    type:'doughnut',
+    data:{
+        labels:[] = mostSoldGame,
+        datasets:[{
+            label:"Most Purchased Game",
+            data:[] = mostSoldTotalQuantity,
+            backgroundColor:["rgba(214, 255, 68, 0.9)"],
+            borderWidth:2,
+            borderColor:'#8C09E6'
+        }]
+    }
+});
+'<%for(var i=0;i<fullUserDetails.length;i++){%>'
+var yearly = [];
+yearly.push(new Date('<%=fullUserDetails[i].date%>').getFullYear());
+console.log(yearly)
+'<%for(var i=0;i<userChart.length;i++){%>'
+var userNumber = [];
+userNumber.push(parseFloat('<%=userChart[i].name%>'));
+console.log(userNumber)
+var userChart = document.getElementById("userChart").getContext("2d");
+const newUserChart = new Chart(userChart,{
+    type:'bar',
+    data:{
+        labels:[] = yearly,
+        datasets:[{
+            label:'User Growth Chart Yearly',
+            data:[] = userNumber,
+            backgroundColor:["rgba(37, 94, 247, 0.7)"],
+            hoverBorderWidth:3,
+            borderWidth:'2',
+            hoverBorderColor:'#000',
+            borderColor:'#FF00EA'
+        }]
+    }
+});
+'<%}%>'
+'<%}%>'
+</script>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</html>

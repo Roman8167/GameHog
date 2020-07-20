@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.css">
+    <title>Checkout</title>
+</head>
+<body>
+<div class="container">
+<img src="./images/undraw_check_boxes_m3d0.png" width="25%" class="img-fluid">
+</div>
+<div class="container">
+<%-include('./errors.ejs')%>
+<form action="/checkout" method="POST">
+<label for="name">Customer-Name</label>
+<input type="text" id="name" name="name" class="form-control" value="<%=name%>" readonly>
+<br>
+<label for="Email">Email</label>
+<input type="email" id="email" name="email" class="form-control" value="<%=email%>" readonly>
+<br>
+<label for="address">Address</label>
+<input type="text" id="address" name="address" class="form-control">
+<br>
+<label for="telephone">Telephone</label>
+<input type="tel" id="telephone" name="telephone" class="form-control">
+<br>
+<label for="city">City</label>
+<input type="text" id="city" name="city" class="form-control">
+<table class="table">
+<thead>
+<tr>
+    <th>Items</th>
+    <th>Sub-Total</th>
+    <th>Total Quantity</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+    <td><input type="text" id="game" name="game" class="form-control" value="<%=gameName%>" readonly></td>
+    <td><input type="number" id='subtotal' name="subtotal" class="form-control" readonly value="<%=subtotal%>"></td>
+    <td><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">$</span>
+    </div><input type="number" id="totalqty" name="totalqty" class="form-control" readonly value="<%=totalQty%>"></td>
+    <td><a href="/cart" role="button"><i class="material-icons">edit</i></a></td>
+    
+</tr>
+</tbody>
+</table>
+<button type="submit" class="btn-info btn block">Proceed</button>
+</form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>    
+</body>
+</html>
